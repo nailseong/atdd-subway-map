@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -106,4 +108,12 @@ public class JdbcSectionDao implements SectionDao {
         return jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public Integer deleteByIdIn(final List<Long> ids) {
+        final String parameters = IntStream.range(0, ids.size())
+                .mapToObj(it -> "?")
+                .collect(Collectors.joining(", "));
+        final String sql = "DELETE FROM section WHERE id IN ("+ parameters +")";
+        return jdbcTemplate.update(sql, ids.toArray());
+    }
 }

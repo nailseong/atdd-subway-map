@@ -1,5 +1,6 @@
 package wooteco.subway.dao;
 
+import java.util.List;
 import java.util.Optional;
 import wooteco.subway.domain.Section;
 import wooteco.subway.domain.Sections;
@@ -19,4 +20,6 @@ public interface SectionDao {
     Optional<Section> findByLineIdAndDownStationId(Long lineId, Long downStationId);
 
     Integer deleteById(Long id);
+
+    Integer deleteByIdIn(List<Long> ids);
 }

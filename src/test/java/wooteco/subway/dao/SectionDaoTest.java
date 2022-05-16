@@ -225,4 +225,20 @@ class SectionDaoTest extends DaoTest {
         // then
         assertThat(actual).isEmpty();
     }
+
+    @Test
+    @DisplayName("리스트에 들어있는 아이디에 해당하는 모든 row 를 삭제한다.")
+    void DeleteByIdIn() {
+        // given
+        final Long redSectionId = sectionDao.insert(redSection);
+        final Long blueSectionId = sectionDao.insert(blueSection);
+
+        final List<Long> sectionIds = List.of(redSectionId, blueSectionId);
+
+        // when
+        final Integer actual = sectionDao.deleteByIdIn(sectionIds);
+
+        // then
+        assertThat(actual).isEqualTo(2);
+    }
 }
