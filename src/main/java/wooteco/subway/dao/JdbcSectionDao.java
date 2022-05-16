@@ -30,6 +30,7 @@ public class JdbcSectionDao implements SectionDao {
             + "INNER JOIN station AS us ON s.up_station_id = us.id "
             + "INNER JOIN station AS ds ON s.down_station_id = ds.id "
             + "WHERE s.line_id = ? ";
+
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Section> rowMapper = (resultSet, rowNumber) -> new Section(
             resultSet.getLong("id"),
