@@ -1,6 +1,7 @@
 package wooteco.subway.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wooteco.subway.dao.LineDao;
@@ -106,9 +107,10 @@ public class SectionService {
     }
 
     private void deleteAll(final Sections deletableSections) {
-        final List<Section> sections = deletableSections.getValue();
-        for (Section section : sections) {
-            sectionDao.deleteById(section.getId());
-        }
+        final List<Long> sectionIds = deletableSections.getValue()
+                .stream()
+                .map(Section::getId)
+                .collect(Collectors.toList());
+        sectionDao.deleteByIdIn(sectionIds);
     }
 }
